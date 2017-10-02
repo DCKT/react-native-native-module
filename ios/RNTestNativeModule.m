@@ -3,11 +3,16 @@
 
 @implementation RNTestNativeModule
 
-- (dispatch_queue_t)methodQueue
+RCT_EXPORT_MODULE();
+
+
+RCT_REMAP_METHOD(getAppVersion,
+                 findEventsWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
 {
-    return dispatch_get_main_queue();
-}
-RCT_EXPORT_MODULE()
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    resolve(version);
+
+};
 
 @end
-  
